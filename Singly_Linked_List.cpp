@@ -1,29 +1,25 @@
 #include "Singly_Linked_List.h"
 
-Node * head = nullptr, * linkNode = nullptr, * tmpNode = nullptr;
-
-Node * createNode(int data)
+Node * Store::create_node(int data)
 {
-	Node * node = (Node *)malloc(sizeof(Node *));
-
+	Node * node = new Node;
 	node->data = data;
-	node->nextNode = nullptr;
-
+	node->after_node = nullptr;
 	return node;
 }
 
-void addNode(Node * node)
+void Store::add_node(Node * node)
 {
 	if (head == nullptr) {
 		head = node;
 	}
-	else if (head->nextNode == nullptr) {
-		head->nextNode = node;
-		linkNode = node;
+	else if (head->after_node == nullptr) {
+		head->after_node = node;
+		link_node = node;
 	}
 	else {
-		linkNode->nextNode = node;
-		linkNode = node;
+		link_node = node;
+		link_node->after_node = node;
 	}
 }
 
@@ -45,7 +41,19 @@ void separateNode(Node * node, int data)
 	}
 }
 
-void freeNode(Node * node)
+void Store::separate_node(Node * node)
 {
-	free(node);
+	if (head == node) {
+		destroy_node(node);
+		head = nullptr;
+	}
+	else {
+		node->after_node = nullptr;
+		destroy_node(node);
+	}
+}
+
+void Store::destroy_node(Node * node)
+{
+	delete node;
 }
